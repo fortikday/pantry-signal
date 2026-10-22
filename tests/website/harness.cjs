@@ -9,7 +9,7 @@ const root = path.join(__dirname, '../../docs');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const script = fs.readFileSync(path.join(root, 'site.js'), 'utf8');
 
-function createSite() {
+function createSite(options = {}) {
   const document = parseDocument(html), network = [], storage = [], timers = [];
   document.documentElement = document.querySelector('html');
   document.body = document.querySelector('body');
@@ -21,6 +21,11 @@ function createSite() {
     clear() { storage.push(['clear']); },
   };
   const windowEvents = new Map();
+  const motionListeners = [];
+  const motionPreference = {
+    matches: Boolean(options.reducedMotion),
+    addEventListener(type, callback) { if (type === 'change') motionListeners.push(callback); },
+  };
   const context = vm.createContext({
     document, console, Date, structuredClone,
     location: {protocol: 'https:', hostname: 'fortikday.github.io', pathname: '/pantry-signal/'},
@@ -29,7 +34,8 @@ function createSite() {
     WebSocket: function () { denyNetwork('WebSocket'); },
     localStorage: fakeStorage, sessionStorage: fakeStorage,
     navigator: {sendBeacon: denyNetwork},
-    matchMedia: () => ({matches: false, addEventListener() {}}),
+    matchMedia: query => query === '(prefers-reduced-motion: reduce)'
+      ? motionPreference : {matches: false, addEventListener() {}},
     addEventListener(type, callback) {
       if (!windowEvents.has(type)) windowEvents.set(type, []);
       windowEvents.get(type).push(callback);
@@ -55,6 +61,10 @@ function createSite() {
     run: code => vm.runInContext(code, context),
     async fireWindow(type, detail = {}) {
       for (const callback of windowEvents.get(type) || []) await callback({type, ...detail});
+    },
+    async setReducedMotion(matches) {
+      motionPreference.matches = Boolean(matches);
+      for (const callback of motionListeners) await callback({matches: motionPreference.matches});
     },
     flushTimers() { while (timers.length) timers.shift()(); },
   };
