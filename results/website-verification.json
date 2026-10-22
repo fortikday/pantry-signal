@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-22",
+  "artifact": "Pantry Signal public product website",
+  "source_directory": "docs",
+  "automated_checks": {
+    "command": "node --test tests/frontend/*.test.cjs tests/website/*.test.cjs",
+    "passed": 54,
+    "failed": 0,
+    "existing_local_app_frontend": 40,
+    "public_website_behavior": 14,
+    "runtime": "Node.js 24.19.0 on Windows",
+    "method": "Actual application scripts execute against a shared simulated DOM. These are behavior checks, not browser layout or full browser end-to-end tests.",
+    "website_coverage": [
+      "Order reservations, preparation usage, and no further deduction when ready",
+      "Paused inventory while the kitchen progresses, followed by exactly-once catch-up",
+      "Queued cancellation, duplicate and invalid actions, reset, and snapshot isolation",
+      "Ingredient conservation across 800 deterministic action iterations",
+      "No backend, network, or browser-storage access from the sample",
+      "Mobile menu state and resolving relative website assets"
+    ]
+  },
+  "manual_browser_check": {
+    "environment": "Local website preview in a real browser",
+    "desktop_design_reviewed": true,
+    "mobile_iframe_width_px": 375,
+    "mobile_document_client_width_px": 360,
+    "mobile_document_scroll_width_px": 360,
+    "mobile_navigation_opens_and_closes": true,
+    "chicken_before_preparation_g": 5000,
+    "queued_reservation_g": 400,
+    "chicken_after_preparation_g": 4600,
+    "chicken_after_ready_g": 4600,
+    "paused_kitchen_reaches_ready": true,
+    "paused_displayed_chicken_g": 5000,
+    "paused_changes_waiting": 3,
+    "chicken_after_resume_g": 4600,
+    "changes_waiting_after_resume": 0,
+    "reset_restores_starting_state": true
+  },
+  "scope": {
+    "hosting": "Static website; no restaurant backend is deployed by this directory",
+    "sample_data": "Fictional recipe and stock quantities in browser memory",
+    "persistent_restaurant_records": false,
+    "real_pos_connection": false,
+    "live_ai_model": false,
+    "accounts_or_payments": false,
+    "claims_measured_waste_savings": false
+  }
+}
