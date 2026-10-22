@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-22",
+  "prototype": "Pantry Signal 0.1.0",
+  "automated_tests": {
+    "passed": 147,
+    "failed": 0,
+    "domain": 89,
+    "http_integration": 18,
+    "frontend_behavior": 40,
+    "commands": [
+      "python -m pytest tests -q",
+      "node --test tests/frontend/*.test.cjs"
+    ],
+    "verified_environment": {
+      "platform": "Windows",
+      "python": "3.12.14",
+      "node": "24.19.0",
+      "python_dependencies": "Exact versions in requirements-dev.txt; checked against the installed environment. A fresh network installation was not performed."
+    },
+    "frontend_method": "The actual inline index.html script executes in a simulated DOM with controlled network responses and timers; no third-party JavaScript dependencies.",
+    "frontend_coverage": [
+      "Cached-stock labels and physical-count guards for unavailable, paused, delayed, inconsistent, or unconfirmed updates",
+      "Sync timestamp aging even when the HTTP endpoint remains reachable or requests hang",
+      "Out-of-order successes and failures for both polling services",
+      "Stable retry request IDs, concurrent order submission, and kitchen independence during an inventory outage",
+      "Recipe draft preservation and version conflicts",
+      "Expiry labels rolling over with the inventory snapshot date",
+      "Request timeout handling and text-only rendering of supplied labels"
+    ],
+    "automated_browser_rendering_or_layout": false,
+    "automated_full_browser_end_to_end": false
+  },
+  "javascript_syntax": "passed",
+  "browser_walkthrough": {
+    "method": "Manual observations from the initial prototype walkthrough; these are not automated test cases.",
+    "data": "Clearly labelled fictional deliveries, recipes, orders and measurements",
+    "empty_inventory_shown_before_explicit_seed": true,
+    "table_7_caesar_chicken_shrimp": true,
+    "chicken_reserved_g": 400,
+    "chicken_before_preparation_g": 5000,
+    "chicken_after_first_preparation_g": 4600,
+    "ready_did_not_deduct_again": true,
+    "pause_and_resume_controls": true,
+    "inventory_process_actually_stopped": true,
+    "table_8_order_and_preparation_worked_during_outage": true,
+    "inventory_caught_up_after_restart": true,
+    "chicken_after_two_preparations_g": 4200,
+    "tomato_additional_delivery_g": 1000,
+    "tomato_unused_batch_waste_g": 100,
+    "tomato_expected_after_changes_g": 5740,
+    "tomato_measured_g": 5700,
+    "saved_count_difference_g": -40,
+    "recipe_draft_preserved_during_polling": true,
+    "changed_recipe_did_not_change_earlier_order_snapshots": true,
+    "sample_chicken_recipe_restored_g": 400,
+    "source_identity_and_saved_event_cursor_match": true
+  },
+  "browser_followup_review": {
+    "method": "Manual browser check after the freshness changes",
+    "paused_warning_at_point_of_stock_quantities": true,
+    "each_stock_tile_labels_cached_estimates": true,
+    "stale_stock_numbers_visually_muted": true,
+    "last_successful_sync_time_visible_in_stock_area": true,
+    "physical_count_button_disabled_while_paused": true,
+    "updates_resumed_after_check": true,
+    "current_estimate_labels_returned_after_resume": true,
+    "existing_two_orders_six_batches_and_recorded_count_preserved": true,
+    "stale_warning_screenshot": "../stale-stock-preview.png",
+    "repeatable_manual_steps": "../CONTRIBUTING.md#manual-browser-check"
+  },
+  "scope": {
+    "services": "Independent order/kitchen and inventory HTTP services with separate SQLite databases",
+    "hosted_saas": false,
+    "connected_to_real_pos": false,
+    "live_ai_model": false,
+    "authentication_or_staff_roles": false,
+    "undo_ready_transition": false,
+    "prepared_subrecipes_or_yield_accounting": false,
+    "kitchen_batch_allocations": "Assumed earliest recorded expiry eligible on the preparation business date",
+    "food_safety_determination": false,
+    "real_bakery_or_restaurant_pilot": false,
+    "claims_measured_waste_savings": false
+  }
+}
