@@ -107,7 +107,7 @@
     setText('demo-sync', state.paused ? 'Resume sample updates' : 'Pause sample updates');
     setText('demo-sync-note', state.paused
       ? 'Sample inventory is paused. These figures are not current. The kitchen can still progress; resume to apply its waiting changes once.'
-      : 'The recipe estimate follows the order. This is a simulation, not live stock.');
+      : 'The ingredient estimate follows each change in the order.');
     setDisabled('demo-place', state.orderStatus !== 'empty');
     setDisabled('demo-prepare', state.orderStatus !== 'queued');
     setDisabled('demo-ready', state.orderStatus !== 'preparing');
@@ -146,6 +146,55 @@
   });
   const syncButton = byId('demo-sync');
   if (syncButton) syncButton.addEventListener('click', () => dispatch(state.paused ? 'resume' : 'pause'));
+
+  // The real-app recording stays a still image until the visitor chooses Play.
+  const walkthroughImage = byId('walkthrough-image');
+  const walkthroughButton = byId('walkthrough-play');
+  const walkthroughStatus = byId('walkthrough-status');
+  if (walkthroughImage && walkthroughButton && walkthroughStatus) {
+    const poster = walkthroughImage.dataset.walkthroughPoster || walkthroughImage.getAttribute('src');
+    const recording = walkthroughImage.dataset.walkthroughSrc;
+    const motionPreference = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    let playing = false;
+    let playbackNumber = 0;
+
+    function stopWalkthrough(message) {
+      playing = false;
+      walkthroughImage.setAttribute('src', poster);
+      walkthroughButton.setAttribute('aria-pressed', 'false');
+      walkthroughButton.textContent = 'Play the app walkthrough';
+      walkthroughStatus.textContent = message || 'Still image shown. The recording plays only when you choose Play.';
+    }
+
+    if (!poster || !recording) {
+      walkthroughButton.disabled = true;
+      walkthroughStatus.textContent = 'The recording is unavailable. The screenshot is shown.';
+    } else {
+      stopWalkthrough();
+      walkthroughButton.addEventListener('click', () => {
+        if (playing) {
+          stopWalkthrough('Walkthrough stopped. The starting image is shown.');
+          return;
+        }
+        playing = true;
+        // A fresh media URL restarts the GIF after Stop rather than resuming a cached frame.
+        playbackNumber += 1;
+        walkthroughImage.setAttribute('src', recording + (recording.includes('?') ? '&' : '?') + 'play=' + playbackNumber);
+        walkthroughButton.setAttribute('aria-pressed', 'true');
+        walkthroughButton.textContent = 'Stop and reset walkthrough';
+        walkthroughStatus.textContent = 'App recording playing with fictional data. Choose Stop to return to the starting image.';
+      });
+      walkthroughImage.addEventListener('error', () => {
+        if (playing) stopWalkthrough('The recording could not be loaded. The screenshot is shown; you can try Play again.');
+      });
+      if (motionPreference && typeof motionPreference.addEventListener === 'function') {
+        motionPreference.addEventListener('change', event => {
+          if (event.matches && playing) stopWalkthrough('Animation stopped to match your motion preference. The starting image is shown.');
+        });
+      }
+    }
+  }
 
   document.documentElement.classList.add('js');
   const menuButton = byId('menu-toggle');
