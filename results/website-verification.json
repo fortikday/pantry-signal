@@ -4,10 +4,11 @@
   "source_directory": "docs",
   "automated_checks": {
     "command": "node --test tests/frontend/*.test.cjs tests/website/*.test.cjs",
-    "passed": 54,
+    "passed": 60,
     "failed": 0,
     "existing_local_app_frontend": 40,
     "public_website_behavior": 14,
+    "recorded_walkthrough_behavior": 6,
     "runtime": "Node.js 24.19.0 on Windows",
     "method": "Actual application scripts execute against a shared simulated DOM. These are behavior checks, not browser layout or full browser end-to-end tests.",
     "website_coverage": [
@@ -16,12 +17,23 @@
       "Queued cancellation, duplicate and invalid actions, reset, and snapshot isolation",
       "Ingredient conservation across 800 deterministic action iterations",
       "No backend, network, or browser-storage access from the sample",
-      "Mobile menu state and resolving relative website assets"
+      "Mobile menu state and resolving relative website assets",
+      "Walkthrough manual play, stop, restart, reduced-motion preference changes, image failure and retry",
+      "Published screenshot PNG and six-frame GIF signatures"
     ]
   },
   "manual_browser_check": {
     "environment": "Local website preview in a real browser",
     "desktop_design_reviewed": true,
+    "updated_design_viewport_px": [1280, 800],
+    "updated_mobile_viewport_px": [375, 812],
+    "updated_mobile_document_client_width_px": 360,
+    "updated_mobile_document_scroll_width_px": 360,
+    "updated_mobile_navigation_opens_and_closes": true,
+    "updated_walkthrough_plays_and_stops_on_desktop_and_mobile": true,
+    "updated_walkthrough_image_loaded_size_px": [699, 654],
+    "feedback_link": "Prefilled public GitHub issue draft; account requirement disclosed; no issue submitted during QA",
+    "previous_sample_behavior_check": "The following sample-flow measurements are retained from the initial website review; sample calculation logic is unchanged in this update.",
     "mobile_iframe_width_px": 375,
     "mobile_document_client_width_px": 360,
     "mobile_document_scroll_width_px": 360,
@@ -36,6 +48,17 @@
     "chicken_after_resume_g": 4600,
     "changes_waiting_after_resume": 0,
     "reset_restores_starting_state": true
+  },
+  "real_app_media": {
+    "source": "Browser screenshots of the actual local Python app with fresh isolated fictional deliveries and one Table 7 order",
+    "files": ["assets/app-order.png", "assets/app-stock.png", "assets/app-walkthrough.gif"],
+    "size_px": [699, 654],
+    "gif_frames": 6,
+    "gif_duration_ms": 20000,
+    "gif_sha256": "e92383f0659dd1df109df5c5189583dae6ed10ea096a591f83f9f0360929a53a",
+    "autoplay": false,
+    "stock_result": "5,000 g chicken; 400 g reserved; 4,600 g after preparation; 4,600 g after ready",
+    "content_edits": "None; screenshot format normalization and GIF palette compression only"
   },
   "scope": {
     "hosting": "Static website; no restaurant backend is deployed by this directory",
