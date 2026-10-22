@@ -43,6 +43,33 @@ browser rendering, layout, accessibility, or full end-to-end tests. The earlier
 browser walkthrough in `results/verification.json` is recorded separately as
 manual evidence; it is not counted as automated coverage.
 
+## Product website
+
+The public product website lives in `docs/`. It uses plain HTML, CSS, and
+JavaScript, with no build step, external assets, or runtime packages. GitHub
+Pages publishes this directory from `main`.
+
+Preview just the website, independently of the restaurant services:
+
+```sh
+python -m http.server 8780 --bind 127.0.0.1 --directory docs
+```
+
+Open `http://127.0.0.1:8780/`. The interactive example uses fictional quantities
+in browser memory. It never contacts the restaurant services and does not save
+orders or stock between visits.
+
+Run the website's behavior checks together with the app's front-end checks:
+
+```sh
+node --test tests/frontend/*.test.cjs tests/website/*.test.cjs
+```
+
+The website checks also use a simulated DOM. After visual changes, check the
+website in a browser at desktop and narrow mobile widths. Verify the sample's
+order, preparation, ready, pause/resume, and reset controls. The layout and
+browser check results are recorded separately in `results/website-verification.json`.
+
 ## Manual browser check
 
 To repeat the main workflow without using an existing log, run:

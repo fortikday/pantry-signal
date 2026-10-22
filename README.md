@@ -8,6 +8,17 @@ It has no connection to a real restaurant, payment terminal, or live AI model.
 Recipe arithmetic drives the estimates. Real recipe quantities need approval
 by the restaurant before any operational use.
 
+## Website and interactive sample
+
+[Visit the Pantry Signal website](https://fortikday.github.io/pantry-signal/)
+to explore the product and try the Table 7 example. The website uses fictional
+data in browser memory; it does not save restaurant records or connect to the
+local services. For persistent local orders, deliveries, and stock checks,
+download this project and follow the launch instructions below.
+
+The website source lives in `docs/`. See [the contributor guide](CONTRIBUTING.md#product-website)
+for preview and test commands.
+
 ![Restaurant prototype with fictional data](preview.png)
 
 ## Open it
