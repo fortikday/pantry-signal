@@ -1,0 +1,13 @@
+local/
+local-review/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.sqlite3
+*.sqlite3-*
+*.db
+.env
+.env.*
+build/
+dist/
+.venv/

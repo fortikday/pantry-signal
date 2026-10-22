@@ -1,0 +1,2 @@
+# Runtime: Python 3.11 or newer, standard library only.
+# No third-party packages are required to launch Pantry Signal.
